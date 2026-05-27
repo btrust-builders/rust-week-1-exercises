@@ -18,62 +18,78 @@ pub struct Utxo {
 /// Calculate the total Bitcoin reward for a given number of mined blocks.
 pub fn calculate_total_reward(blocks_mined: u64) -> f64 {
     // TODO: Multiply blocks_mined by MINING_REWARD and return result
-    todo!()
+    blocks_mined as f64 * MINING_REWARD 
 }
 
 /// Return true if the transaction fee is between 0.00001 and 0.01 BTC.
 pub fn is_valid_tx_fee(fee: f64) -> bool {
     // TODO: Check if fee is between 0.00001 and 0.01 BTC (inclusive)
-    todo!()
+    fee >= 0.0001 && fee <= 0.01
 }
-
+if fee >= 0.0001 && fee <= 0.01 {
+    true
+} else {
+    false
+}
 /// Return true if the wallet balance is greater than 50.0 BTC.
 pub fn is_large_balance(balance: f64) -> bool {
     // TODO: Compare balance to 50.0 and return result
-    todo!()
+    balance > 50.0
 }
 
 /// Return the priority of a transaction ("high", "medium", "low") based on fee rate.
 pub fn tx_priority(size_bytes: u64, fee_btc: f64) -> &'static str {
     // TODO: Calculate fee rate (fee_btc / size_bytes) and use if/else if/else
     // High: > 0.00005, Medium: > 0.00001, otherwise Low
-    todo!()
+    let fee_rate = (fee_btc / size_bytes) as f64;
+    if fee_rate = > 0.00005 {
+        "High"
+    } else if fee_rate > 0.00001 {
+        "medium"
+    } else {
+        "low"
+    }
 }
 
 /// Return true if the network string equals "mainnet" (case-insensitive).
 pub fn is_mainnet(network: &str) -> bool {
     // TODO: Convert network to lowercase and compare with "mainnet"
-    todo!()
+    network.to_lowercase() == "mainnet"
 }
 
 /// Return true if value is in the inclusive range 100..=200.
 pub fn is_in_range(value: i64) -> bool {
     // TODO: Check if 100 <= value <= 200
-    todo!()
+    value <= 100 && value <= 200
 }
 
 /// Return true if both references point to the exact same object in memory.
 pub fn is_same_wallet<T>(wallet1: &T, wallet2: &T) -> bool {
     // TODO: Use std::ptr::eq to compare reference identity
-    todo!()
+    std::ptr::eq(wallet1, wallet2)
 }
 
 /// Normalize a Bitcoin address by trimming whitespace and lowercasing.
 pub fn normalize_address(address: &str) -> String {
     // TODO: Trim leading/trailing whitespace and convert to lowercase
-    todo!()
+    address.trim().to_lowercase()
 }
 
 /// Append a new UTXO to the list and return the updated list.
 pub fn add_utxo(utxos: Vec<Utxo>, new_utxo: Utxo) -> Vec<Utxo> {
     // TODO: Push new_utxo into utxos and return it
-    todo!()
+    utxos.push(new_utxo);
+    utxos
 }
 
 /// Find the first transaction with a fee greater than 0.005 BTC.
 pub fn find_high_fee(fee_list: &[f64]) -> Option<(usize, f64)> {
     // TODO: Iterate with enumerate and return the first (index, fee) where fee > 0.005
-    todo!()
+    for (index, *fee) in fee_list.iter().enumerat() {
+        if *fee > 0.005 {
+            return some((index, fee));
+        }
+    
 }
 
 /// Return basic wallet details as a tuple of (name, balance).
