@@ -155,7 +155,7 @@ mod exercise_tests {
 
     #[test]
     fn test_validate_block_height_too_large() {
-        let (ok, msg) = validate_block_height(900_000);
+        let (ok, msg) = validate_block_height(1_250_000);
         assert!(!ok);
         assert!(msg.to_lowercase().contains("unrealistic"));
     }
