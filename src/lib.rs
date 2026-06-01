@@ -31,12 +31,12 @@ pub fn is_large_balance(balance: f64) -> bool {
 /// Return the priority of a transaction ("high", "medium", "low") based on fee rate.
 pub fn tx_priority(size_bytes: u64, fee_btc: f64) -> &'static str {
     let fee_rate = fee_btc / size_bytes as f64;
-    if fee_rate > 0.0005 {
-        "High"
+    if fee_rate > 0.00005 {
+        "high"
     } else if fee_rate > 0.00001 {
-        "Medium"
+        "medium"
     } else {
-        "Low"
+        "low"
     }
 }
 
@@ -77,7 +77,7 @@ pub fn find_high_fee(fee_list: &[f64]) -> Option<(usize, f64)> {
 
 /// Return basic wallet details as a tuple of (name, balance).
 pub fn get_wallet_details() -> (String, f64) {
-    ("Wallet 1".to_string(), 993.3289)
+    ("satoshi_wallet".to_string(), 50.0)
 }
 
 /// Get the status of a transaction from the mempool or "not found".
@@ -114,10 +114,10 @@ pub fn generate_address(prefix: &str) -> String {
 
 /// Validate a Bitcoin block height. Returns (is_valid, message).
 pub fn validate_block_height(height: i64) -> (bool, String) {
-    if height < 0 {
-        (false, "Height cannot be negative".to_string())
+      if height < 0 {
+        (false, "Invalid: negative block height".to_string())
     } else if height > 800_000 {
-        (false, "Block height too large".to_string())
+        (false, "Invalid: unrealistic block height".to_string())
     } else {
         (true, "Valid block height".to_string())
     }
@@ -175,14 +175,23 @@ pub fn create_utxo(
 
 // Implement extract_tx_version function below
 pub fn extract_tx_version(raw_tx_hex: &str) -> Result<u32, String> {
-    if raw_tx_hex.len() < 8 {
-        return Err("Transaction hex too short".to_string());
+     if raw_tx_hex.len() < 8 {
+        return Err("Transaction data too short".to_string());
     }
 
     let version_hex = &raw_tx_hex[0..8];
 
-    match u32::from_str_radix(version_hex, 16) {
-        Ok(version) => Ok(version),
-        Err(_) => Err("Failed to parse transaction version".to_string()),
+    let bytes = match hex::decode(version_hex) {
+        Ok(b) => b,
+        Err(_) => return Err("Hex decode error".to_string()),
+    };
+
+    if bytes.len() != 4 {
+        return Err("Hex decode error".to_string());
     }
+
+    // little-endian conversion (Bitcoin standard)
+    let version = u32::from_le_bytes([bytes[0], bytes[1], bytes[2], bytes[3]]);
+
+    Ok(version)
 }
