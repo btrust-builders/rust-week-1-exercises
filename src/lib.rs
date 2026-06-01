@@ -68,7 +68,8 @@ pub fn is_in_range(value: i64) -> bool {
 /// Return true if both references point to the exact same object in memory.
 pub fn is_same_wallet<T>(wallet1: &T, wallet2: &T) -> bool {
     // TODO: Use std::ptr::eq to compare reference identity
-    todo!()
+    std::ptr::eq(wallet1, wallet2)
+    // todo!()
 }
 
 /// Normalize a Bitcoin address by trimming whitespace and lowercasing.
