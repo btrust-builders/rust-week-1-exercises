@@ -120,6 +120,7 @@ pub fn validate_block_height(height: i64) -> (bool, String) {
 pub fn halving_schedule(blocks: &[u64]) -> HashMap<u64, u64> {
     // TODO: Base reward is 50 * 100_000_000 sats; halving interval is 210_000 blocks
     // TODO: For each block: halvings = block / 210_000; reward = base >> halvings
+    // TODO: Account for reward depletion: reward reaches 0 at block 6,930,000 (33rd halving)
     // TODO: Insert (block, reward) into the result HashMap
     todo!()
 }

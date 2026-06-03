@@ -168,11 +168,14 @@ mod exercise_tests {
 
     #[test]
     fn test_halving_schedule() {
-        let result = halving_schedule(&[0, 210_000, 420_000, 630_000]);
+        let result = halving_schedule(&[0, 210_000, 420_000, 630_000, 6_720_000, 6_930_000, 13_440_000]);
         assert_eq!(result.get(&0), Some(&5_000_000_000));
         assert_eq!(result.get(&210_000), Some(&2_500_000_000));
         assert_eq!(result.get(&420_000), Some(&1_250_000_000));
         assert_eq!(result.get(&630_000), Some(&625_000_000));
+        assert_eq!(result.get(&6_720_000), Some(&1));
+        assert_eq!(result.get(&6_930_000), Some(&0));
+        assert_eq!(result.get(&13_440_000), Some(&0));
     }
 
     #[test]
